@@ -1,0 +1,33 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile.fastapi
+    container_name: fastapi
+    expose:
+      - "8000"
+
+  oauth2_proxy:
+    build:
+      context: .
+      dockerfile: Dockerfile.oauth2_proxy
+    container_name: oauth2_proxy
+    ports:
+      - "4180:4180"
+    depends_on:
+      - fastapi
+    env_file:
+      - .env
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - oauth2_proxy

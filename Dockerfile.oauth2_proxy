@@ -1,0 +1,9 @@
+FROM quay.io/oauth2-proxy/oauth2-proxy:v7.2.0
+
+ENV OAUTH2_PROXY_CLIENT_ID=${OAUTH2_PROXY_CLIENT_ID}
+ENV OAUTH2_PROXY_CLIENT_SECRET=${OAUTH2_PROXY_CLIENT_SECRET}
+ENV OAUTH2_PROXY_COOKIE_SECRET=${OAUTH2_PROXY_COOKIE_SECRET}
+
+COPY oauth2_proxy.cfg /etc/oauth2_proxy.cfg
+
+CMD ["/bin/oauth2-proxy", "--config", "/etc/oauth2_proxy.cfg"]
